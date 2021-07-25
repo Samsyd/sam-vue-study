@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gugudan</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div>{{first}} 곱하기 {{scnd}} 는?</div>
+    <div>{{first*scnd}}</div>
+    <form v-on:submit="afdd">
+        <input type="number" v-model="value" ref='answer'>
+        <button type="submit">Cal</button>
+        
+    </form>
+    <div>{{value}}</div>
+    <div id='result'>{{result}}</div>
+</div>
+    <script>
+        const app = new Vue({
+            el:'#root',
+            data:{
+                first:Math.ceil(Math.random()*9),
+                scnd:Math.ceil(Math.random()*9),
+                value:'', // 웹객체의 값 가져오기 모름
+                result:'',
+
+            },
+            methods:{
+                afdd(e){
+                    e.preventDefault(); //form의 새로고침을 막기위해.
+                    // console.log(this);
+                    // console.log(this.first, this.scnd, this.value);
+                    if( this.first * this.scnd===parseInt(this.value)){
+                        this.result="Good";
+                    }else{
+                        this.result='nogood';
+                    }
+                    this.reset_val();
+                    this.$refs.answer.focus();
+                },
+                reset_val(){
+                    if(this.result==='Good'){
+                        this.first=Math.ceil(Math.random()*9);
+                        this.scnd=Math.ceil(Math.random()*9);
+                    }
+                    this.value='';
+                }
+            },
+        });
+    </script>
+</body>
+</html>
