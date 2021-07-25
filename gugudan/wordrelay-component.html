@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <word-relay startword="aaa"></word-relay>
+        <hr><hr>
+        <word-relay startword="bbb"></word-relay>
+        <hr><hr>
+        <word-relay startword="ccc"></word-relay>
+        <hr><hr>
+        
+    </div>
+    <script>
+        //컴포넌트 이름 html로 넘어가면 대문자가 모두 소문자뢰 취환됨.
+        // WordRelay, wordRelay 사용못하고 word-realy로 사용.
+        Vue.component('word-relay',{ //전역 컴포넌트
+            template:`
+                <div>
+                    <div>{{word}}</div>
+                    <form v-on:submit="checkRst">
+                    <input type='text' v-model="value" ref='answer'>
+                    <button type='submit'>GO</button>
+
+                    </form>
+                    <div>{{result}}</div>
+                </div>
+            `,
+            props:['startword'],
+            data(){
+                return{
+                    word: this.startword,
+                    value:'',
+                    result:'',
+                };
+            },
+            methods:{
+                checkRst(e){
+                    e.preventDefault();
+                    if(this.word[this.word.length-1] === this.value[0]){
+                        this.result="good";
+
+                        this.word=this.value;
+                        this.value='';     
+                    }else{
+                        this.result="No"
+                        this.value='';
+                    }
+                    this.$refs.answer.focus();
+                },
+            },
+        });
+    </script>
+    <script>
+        const app = new Vue({
+            el:"#root",
+        });
+    </script>
+</body>
+</html>
