@@ -1,18 +1,5 @@
-const { Module } = require("webpack");
+import Vue from 'vue';
 
-Module.export={
-    entry:{
-        app:'./main.ja',
-    },
-    module:{
-        rules:[{
+import Numberbaseball from './Numberbaseball';
 
-        }],
-
-    },
-    plugin:[],
-    output:{
-        filename:'app.js',
-        path:'./dist',
-    },
-};
+new Vue(Numberbaseball).$mount('#root');
