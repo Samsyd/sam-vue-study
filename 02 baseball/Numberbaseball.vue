@@ -1,6 +1,5 @@
 <template>
 <div>
-
     <h1> {{result}}</h1>
 
     <form @submit.prevent="onSubmitForm">
@@ -61,17 +60,18 @@
                         alert('fail');
                         this.setDataInit();
                     }else{
-                    let strike=0;
-                    let ball=0;
-                    const answerArray=this.value.split('').map(v=> parseInt(v)); //문자열을 숫자배열로 바꾸는 방식.
+                        let strike=0;
+                        let ball=0;
+                        const answerArray=this.value.split('').map(v=> parseInt(v)); //문자열을 숫자배열로 바꾸는 방식.
 
-                    for(let i = 0; i<4; i+=1){
-                        if(answerArray[i] === this.answer[i]){  //숫자, 자리수 모두 정답.
-                            strike++;
-                        }else if(this.answer.includes(answerArray[i])){ //숫자만 정답.
-                            ball++;
+                        for(let i = 0; i<4; i+=1){
+                            if(answerArray[i] === this.answer[i]){  //숫자, 자리수 모두 정답.
+                                strike++;
+                            }else if(this.answer.includes(answerArray[i])){ //숫자만 정답.
+                                ball++;
+                            }
                         }
-                    }
+                        
                         this.tries.push({
                             try:this.value,
                             result:`${strike}strike ${ball}ball`,
