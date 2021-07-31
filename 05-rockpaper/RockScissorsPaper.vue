@@ -50,8 +50,7 @@ export default {
 	},
 	methods: {
 		changeHand(){
-			//clearInterval(this.interval);
-			this.interval = setInterval(() => {
+			interval = setInterval(() => {
 				if (this.imgCoord === rspCoords.rock){
 					this.imgCoord = rspCoords.scissors;
 					console.log("rock -> scissor");
@@ -65,12 +64,14 @@ export default {
 			}, 1000);
 		},
 		onClickButton(choice){
-			clearInterval(this.interval); // to compare the result.
+			clearInterval(interval); // to compare the result.
+
+			
 			const myScore = scores[choice];
 			const cpuScore = scores[computerChoice(this.imgCoord)];
 			const diff = myScore - cpuScore;
 
-			console.log("I choose " + choice + "Interval:" + this.interval);
+			console.log("I choose " + choice + " Interval:" + interval);
 
 			if(diff ===0){
 				this.result = 'draw';
@@ -81,7 +82,9 @@ export default {
 				this.result = 'lose';
 				this.score -= 1;
 			}
+
 			setTimeout(() => { this.changeHand();}, 1000);
+			
 		},
 	},
 
@@ -92,7 +95,8 @@ export default {
 		this.changeHand();
 	},
 	beforeDestroy(){
-		clearInterval(this.interval);
+		//clearInterval(this.interval);
+		clearInterval(interval);
 	},
 	destroyed(){
 		console.log('destroyed');
