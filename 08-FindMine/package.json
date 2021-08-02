@@ -1,5 +1,5 @@
 {
-  "name": "find-mine",
+  "name": "FindMine",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,14 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.6.14"
+    "vue": "^2.6.14",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "css-loader": "^6.2.0",
     "vue-loader": "^15.9.6",
     "vue-style-loader": "^4.1.3",
     "vue-template-compiler": "^2.6.14",
-    "webpack": "^5.46.0",
+    "webpack": "^5.47.1",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
   },
