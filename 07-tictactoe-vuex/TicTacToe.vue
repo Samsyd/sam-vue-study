@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<div>{{turn}}'s turn</div>
-		<table>
+		<table-component>
 			<tr v-for="(rowData, rowIndex) in tableData" v-bind:key="rowIndex">
 				<td v-for="(cellData, cellIndex) in rowData" v-bind:key="cellIndex"  @click="onClickTd(rowIndex, cellIndex)">{{cellData}}</td>
 			</tr>
-		</table>
+		</table-component>
 		<div v-if="winner">the winner is {{winner}}</div>
 	</div>
 
@@ -15,12 +15,14 @@
 	import {mapState} from 'vuex';
 	import store, {CLICK_CELL, NO_WINNER, RESET_GAME, SET_WINNER, CHANGE_TURN} from './store.js';
 	// import store from './store';
-	//import TableComponent from './TableComponent.vue';
+	import TableComponent from './TableComponent.vue';
 	//import EventBus from './EventBus.js';
 
 export default {
 	store,
-
+	components:{
+		TableComponent,
+	},
 	computed:{
 		...mapState(['winner', 'turn', 'tableData', 'win']),  // 아래 주석문을 짧게 가능.
 		// winner(){
