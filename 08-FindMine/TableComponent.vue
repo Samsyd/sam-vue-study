@@ -4,7 +4,12 @@
       <tr v-for="(rowData, rowIndex) in tableData" :key="rowIndex">
         <td v-for="(cellData, cellIndex) in rowData" 
         :key="cellIndex" 
-        :style="cellDataStyle(rowIndex, cellIndex)">{{cellDataText(rowIndex, cellIndex)}}</td>
+        :style="cellDataStyle(rowIndex, cellIndex)"
+        @click="onClickTd(rowIndex, cellIndex)"
+        @contextmenu.prevent="onRightClickTd(rowIndex, cellIndex)"
+        >
+        
+        {{cellDataText(rowIndex, cellIndex)}}</td>
       </tr>
     </table>
   </div>
@@ -12,11 +17,11 @@
 
 <script>
 import {mapState} from 'vuex';
-import {CODE} from './store';
+import {CLICK_MINE, CODE, FLAG_CELL, NORMALIZE_CELL, OPEN_CELL, QUESTION_CELL} from './store';
 
   export default {
     computed:{
-      ...mapState(['tableData']),
+      ...mapState(['tableData', 'halted']),
       cellDataStyle (state) {
         return (row, cell) => {
           switch(this.$store.state.tableData[row][cell]){
@@ -46,7 +51,6 @@ import {CODE} from './store';
         };
       },
 
-
       cellDataText() {
         return (row, cell) => {
           switch(this.$store.state.tableData[row][cell]){
@@ -65,10 +69,53 @@ import {CODE} from './store';
             case CODE.QUESTION_MINE:
               return '?';  
             default:        
-              return '';
+              return this.$store.state.tableData[row][cell] || '';
           };
         };
       },
     },
+    methods:{
+      onClickTd(row, cell){
+        if(this.halted){
+          return;
+        }
+        // console.log(row, cell, )
+        switch(this.tableData[row][cell]){
+          case CODE.NORMAL:
+            this.$store.commit(OPEN_CELL, {row, cell});
+            return;
+          case CODE.MINE:
+            this.$store.commit(CLICK_MINE, {row, cell});
+            return;
+          default:
+            return;
+
+        }
+
+        
+      },
+      onRightClickTd(row,cell){
+        if(this.halted){
+          return;
+        }
+
+        switch(this.tableData[row][cell]){
+          case CODE.NORMAL:
+          case CODE.MINE:
+            this.$store.commit(FLAG_CELL, {row, cell});
+            return;
+          case CODE.FLAG_MINE:
+          case CODE.FLAG:
+            this.$store.commit(QUESTION_CELL, {row, cell});
+            return;
+          case CODE.QUESTION_MINE:
+          case CODE.QUESTION:
+            this.$store.commit(NORMALIZE_CELL, {row, cell});
+          default:
+            return;
+        }
+
+      }
+    }
   };
 </script>
