@@ -14,7 +14,7 @@
     />
     <input
       type="number"
-      placeholder="cell"
+      placeholder="mine"
       v-bind:value="mine"
       v-on:change="onChangeMine"
     />
@@ -35,15 +35,19 @@ export default {
   },
   methods: {
     onChangeRow(e) {
+      // console.log("row: ", e.target.value);
       this.row = e.target.value;
     },
     onChangeCell(e) {
-      this.Cell = e.target.value;
+      // console.log("Cell: ", e.target.value);
+      this.cell = e.target.value;
     },
     onChangeMine(e) {
-      this.Mine = e.target.value;
+			// console.log("Mine: ", e.target.value);
+      this.mine = e.target.value;
     },
     onClickBtn() {
+      // console.log("MindeForm:", this.row, this.cell, this.mine);
       this.$store.commit(START_GAME, {
         row: this.row,
         cell: this.cell,
